@@ -21,4 +21,29 @@ echo "installing node js lts"
 curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
+echo "making you member of input group"
+sudo gpasswd -a $USER input
+
+echo "install wmctrl and xdotool"
+sudo apt-get install wmctrl xdotool
+
+echo "install libinput tools"
+sudo apt-get install libinput-tools
+
+echo "install libinput gesture"
+git clone https://github.com/bulletmark/libinput-gestures.git
+cd libinput-gestures
+sudo make install
+
+echo "libinput configuration"
+libinput-gestures-setup autostart
+libinput-gestures-setup start
+
+echo "copy gesture conf file"
+cp /etc/libinput-gestures.conf ~/.config
+
+echo "add gesture command to conf file"
+echo "gesture swipe right 3	xdotool key Alt+Tab" >> ~/.config/libinput-gestures.conf
+echo "gesture swipe left 3	xdotool key Alt+Shift+Tab" >> ~/.config/libinput-gestures.conf
+
 echo "setup completed"
